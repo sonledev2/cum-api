@@ -4,7 +4,7 @@ const Image = require('../models/image.model');
 const getAllImage = async (req, res) => {
   try {
     const imageList = await Image.find({});
-    res.json(imageList);
+    return res.status(200).json(imageList);
   } catch (error) {
     throw new Error('Not Found Image List');
   }
