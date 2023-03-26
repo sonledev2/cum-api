@@ -1,15 +1,15 @@
 const express = require('express');
 const {
-  getAllImage,
+  getAllPost,
   getImages,
   getVideos,
-  createImage,
+  createPost,
 } = require('../controllers/post.controller');
 const router = express.Router();
 
-router.get('/post', getAllImage);
+router.get('/post', getAllPost);
 router.get('/image', getImages);
 router.get('/video', getVideos);
-router.post('/post', createImage);
+router.post('/post', createPost);
 
 module.exports = router;

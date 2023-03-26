@@ -1,5 +1,5 @@
 const { default: mongoose } = require('mongoose');
-const Image = require('../models/image.model');
+const Post = require('../models/post.model');
 
 // const getAllImage = async (req, res) => {
 //   try {
@@ -10,14 +10,14 @@ const Image = require('../models/image.model');
 //   }
 // };
 
-const getAllImage = async (req, res) => {
+const getAllPost = async (req, res) => {
   try {
-    const randomImage = await Image.aggregate([
+    const random = await Post.aggregate([
       {
         $sample: { size: 50 },
       },
     ]);
-    return res.status(200).json(randomImage);
+    return res.status(200).json(random);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -25,7 +25,7 @@ const getAllImage = async (req, res) => {
 
 const getImages = async (req, res) => {
   try {
-    const images = await Image.find({
+    const images = await Post.find({
       type: 'image',
     });
     return res.status(200).json(images);
@@ -36,7 +36,7 @@ const getImages = async (req, res) => {
 
 const getVideos = async (req, res) => {
   try {
-    const images = await Image.find({
+    const images = await Post.find({
       type: 'video',
     });
     return res.status(200).json(images);
@@ -45,10 +45,10 @@ const getVideos = async (req, res) => {
   }
 };
 
-const createImage = async (req, res) => {
+const createPost = async (req, res) => {
   const data = req.body.data;
   try {
-    await Image.insertMany(data);
+    await Post.insertMany(data);
     res.status(200).json({ message: 'Post successfully' });
   } catch (error) {
     console.error(error);
@@ -57,8 +57,8 @@ const createImage = async (req, res) => {
 };
 
 module.exports = {
-  getAllImage,
+  getAllPost,
   getImages,
   getVideos,
-  createImage,
+  createPost,
 };

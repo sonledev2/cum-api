@@ -3,8 +3,8 @@ const session = require('express-session');
 const cors = require('cors');
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
+const postRouter = require('./routes/post.route');
 const { cloudinary } = require('./utils/cloudinary');
-const imageRouter = require('./routes/image.route');
 require('dotenv').config();
 
 const app = express();
@@ -56,7 +56,7 @@ app.use('/api/upload', async (req, res) => {
   }
 });
 
-app.use('/api', imageRouter);
+app.use('/api', postRouter);
 
 app.get('/', (req, res) => {
   res.status(200).json({
