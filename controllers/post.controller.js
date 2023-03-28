@@ -56,9 +56,20 @@ const createPost = async (req, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  const postId = req.body.data;
+  try {
+    const post = await Post.findByIdAndDelete(postId);
+    return res.status(200).json({ message: 'Delete successfully', post });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllPost,
   getImages,
   getVideos,
   createPost,
+  deletePost,
 };
