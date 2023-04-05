@@ -1,16 +1,16 @@
 const { default: mongoose } = require('mongoose');
 const Post = require('../models/post.model');
 
-// const getAllImage = async (req, res) => {
-//   try {
-//     const imageList = await Image.find({});
-//     return res.status(200).json(imageList);
-//   } catch (error) {
-//     throw new Error('Not Found Image List');
-//   }
-// };
-
 const getAllPost = async (req, res) => {
+  try {
+    const postList = await Post.find({});
+    return res.status(200).json(postList);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
+const getRandomPost = async (req, res) => {
   try {
     const random = await Post.aggregate([
       {
@@ -57,7 +57,7 @@ const createPost = async (req, res) => {
 };
 
 const deletePost = async (req, res) => {
-  const postId = req.body.data;
+  const postId = req.params.id;
   try {
     const post = await Post.findByIdAndDelete(postId);
     return res.status(200).json({ message: 'Delete successfully', post });
@@ -66,10 +66,26 @@ const deletePost = async (req, res) => {
   }
 };
 
+const deleteManyPost = async (req, res) => {
+  const postIdList = req.body;
+  try {
+    const post = await Post.deleteMany({
+      _id: {
+        $in: postIdList,
+      },
+    });
+    return res.status(200).json({ message: 'Delete successfully', post });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllPost,
+  getRandomPost,
   getImages,
   getVideos,
   createPost,
   deletePost,
+  deleteManyPost,
 };
